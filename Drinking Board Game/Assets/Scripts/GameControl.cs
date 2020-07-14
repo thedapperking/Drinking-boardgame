@@ -44,6 +44,8 @@ public class GameControl : MonoBehaviour
 
     public static bool gameOver = false;
 
+    // public GameObject[] player;
+
     // Use this for initialization
     void Start()
     {
@@ -107,15 +109,20 @@ public class GameControl : MonoBehaviour
         P5DontTakeShortcutButton = GameObject.Find("P5DontTakeShortcutButton");
         P6TakeShortcutButton = GameObject.Find("P6TakeShortcutButton");
         P6DontTakeShortcutButton = GameObject.Find("P6DontTakeShortcutButton");
-
+        
 
         // DECLARING PLAYERS 
+        // player = GameObject.FindGameObjectsWithTag("Player");
+        // Debug.Log(player.Length);
+
         player1 = GameObject.Find("Player1");
         player2 = GameObject.Find("Player2");
         player3 = GameObject.Find("Player3");
         player4 = GameObject.Find("Player4");
         player5 = GameObject.Find("Player5");
         player6 = GameObject.Find("Player6");
+        
+
 
         player1.GetComponent<FollowThePath>().moveAllowed = false;
         player1.GetComponent<FollowThePath>().shortcutmoveAllowed = false;
@@ -4155,6 +4162,8 @@ public class GameControl : MonoBehaviour
 
         
     }
+
+
 
     public void QuitGame()
     {

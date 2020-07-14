@@ -13,6 +13,11 @@ public class FollowThePath : MonoBehaviour {
     [HideInInspector]
     public int shortcutwaypointIndex = 0;
 
+    [HideInInspector]
+    public int StartWaypoint = 0;
+    [HideInInspector]
+    public int SCStartWaypoint = 0;
+
     public bool moveAllowed = false;
     public bool shortcutmoveAllowed = false;
 
@@ -21,7 +26,7 @@ public class FollowThePath : MonoBehaviour {
     public bool passed2ndShortcut = false;
     public bool passed3rdShortcut = false;
 
-
+    public GameObject TakeShortcutButton, DontTakeShortcutButton;
 
     // Use this for initialization
     private void Start ()
@@ -59,6 +64,10 @@ public class FollowThePath : MonoBehaviour {
             {
                 StartwaypointIndex += 1;
             }
+
+            Dice.diceAllowed = false;
+
+            // Debug.Log("FTP move repeating ");
         }
     }
 
@@ -77,55 +86,10 @@ public class FollowThePath : MonoBehaviour {
             {
                 shortcutwaypointIndex += 1;
             }
+
+            Dice.diceAllowed = false;
             
         }
     }
-    
-
-    // Unused code might end up using 
-    /*
-    public void PlayerTakeShortcut()
-    {
-        onShortcut = true;
-        passed1stShortcut = true;
-        // player1.GetComponent<FollowThePath>().transform.position = player1.GetComponent<FollowThePath>().shortcutwaypoints[player1.GetComponent<FollowThePath>().shortcutwaypointIndex].transform.position;
-
-        transform.position = Vector2.MoveTowards(transform.position,
-        shortcutwaypoints[shortcutwaypointIndex].transform.position,
-        1f * Time.deltaTime);
-
-        GameControl.player1SCStartWaypoint = shortcutwaypointIndex - 1;
-
-        TakeShortcutButton.gameObject.SetActive(false);
-        DontTakeShortcutButton.gameObject.SetActive(false);
-        GetComponent<GameControl>().shotforshortcutTile.gameObject.SetActive(false);
-        moveAllowed = false;            // to stop from moving after starting the shortcut--you can make true if you want to continue the roll past the shortcut
-        shortcutmoveAllowed = false;
-
-        Debug.Log("SHORTCUTWAYPOINT INDEX" + shortcutwaypointIndex);
-        // Debug.Log("P1SC + DICEROLL" + player1SCStartWaypoint + diceSideThrown);
-        // Debug.Log("IF ONSHORTCUT " + player1.GetComponent<FollowThePath>().onShortcut); // was on shortcut at this point 
-        // Debug.Log("ON SHORTCUT? " + player1.GetComponent<FollowThePath>().onShortcut);
-        // Debug.Log("P1START WAYPOINT " + player1StartWaypoint);
-    }
-
-    public void PlayerDontTakeShortcut()
-    {
-
-        passed1stShortcut = true;
-        transform.position = waypoints[5].transform.position;
-        shortcutmoveAllowed = false;
-        onShortcut = false;
-        StartwaypointIndex = 5;
-        StartwaypointIndex += 1;
-        TakeShortcutButton.gameObject.SetActive(false);
-        DontTakeShortcutButton.gameObject.SetActive(false);
-        GetComponent<GameControl>().shotforshortcutTile.gameObject.SetActive(false);
-        GameControl.player1StartWaypoint = StartwaypointIndex - 1;
-        
-        // Debug.Log("OTHER BUTTON GETTING CLICKED");
-                
-    }
-    */    
     
 }

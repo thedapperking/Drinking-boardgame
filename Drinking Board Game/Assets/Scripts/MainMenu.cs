@@ -23,24 +23,24 @@ public class MainMenu : MonoBehaviour
 
     public void LeftArrowButton()
     {
-        if (GameControl.numofPlayers >= 2)
+        if (NewGameControl.numofPlayers >= 2)
         {
-            GameControl.numofPlayers -= 1;
+            NewGameControl.numofPlayers -= 1;
             
         }
-        playersText.text = GameControl.numofPlayers.ToString();
+        playersText.text = NewGameControl.numofPlayers.ToString();
 
         // Debug.Log("numofplayers " + GameControl.numofPlayers);
     }
 
     public void RightArrowButton()
     {
-        if (GameControl.numofPlayers <= 5)
+        if (NewGameControl.numofPlayers <= 5)
         {
-            GameControl.numofPlayers += 1;
+            NewGameControl.numofPlayers += 1;
 
         }
-        playersText.text = GameControl.numofPlayers.ToString();
+        playersText.text = NewGameControl.numofPlayers.ToString();
 
         // Debug.Log("numofplayers " + GameControl.numofPlayers);
     }
