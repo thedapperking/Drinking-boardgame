@@ -26,7 +26,6 @@ public class NewGameControl : MonoBehaviour
     public static bool gameOver = false;
     
 
-    // public GameObject Players;
     public void Start()
     {
         
@@ -64,7 +63,7 @@ public class NewGameControl : MonoBehaviour
         TakeShortcutButton = GameObject.Find("TakeShortcutButton");
         DontTakeShortcutButton = GameObject.Find("DontTakeShortcutButton");
 
-        
+        // Finding and setting player models and icons off as default
         for (int i = 0; i < player.Length; i++)
         {
             playerIcon[i].gameObject.SetActive(false);
@@ -72,7 +71,7 @@ public class NewGameControl : MonoBehaviour
             playermoveicon[i].gameObject.SetActive(false);
         }
         
-
+        // Setting player movement to off as default 
         for (int i = 0; i < player.Length; i++)
         {
             player[i].GetComponent<FollowThePath>().moveAllowed = false;
@@ -83,26 +82,24 @@ public class NewGameControl : MonoBehaviour
             player[i].GetComponent<FollowThePath>().SCStartWaypoint = 0;
         }
 
-        
+        // Setting the players icons on for how many there are
         for (int i = 0; i < numofPlayers; i++)
         {
             playerIcon[i].gameObject.SetActive(true);
             player[i].gameObject.SetActive(true);
             playermoveicon[i].gameObject.SetActive(false);
 
-            player[i].GetComponent<FollowThePath>().moveAllowed = false;
-            player[i].GetComponent<FollowThePath>().shortcutmoveAllowed = false;
-            player[i].GetComponent<FollowThePath>().onShortcut = false;
-            player[i].GetComponent<FollowThePath>().passed1stShortcut = false;
-            player[i].GetComponent<FollowThePath>().StartWaypoint = 0;
-            player[i].GetComponent<FollowThePath>().SCStartWaypoint = 0;
+            //player[i].GetComponent<FollowThePath>().moveAllowed = false;
+            //player[i].GetComponent<FollowThePath>().shortcutmoveAllowed = false;
+            //player[i].GetComponent<FollowThePath>().onShortcut = false;
+            //player[i].GetComponent<FollowThePath>().passed1stShortcut = false;
+            //player[i].GetComponent<FollowThePath>().StartWaypoint = 0;
+            //player[i].GetComponent<FollowThePath>().SCStartWaypoint = 0;
         }
 
+        // Start with player 1 move icon on  
         playermoveicon[0].gameObject.SetActive(true);
         
-        
-
-
         // Initial start of game event tiles showing
         redFlipacointile.gameObject.SetActive(false);
         blueMakearuletile.gameObject.SetActive(false);
@@ -449,7 +446,7 @@ public class NewGameControl : MonoBehaviour
 
 
 
-            // IF PLAYER IS ON THE SHORTCUT 
+            //// IF PLAYER IS ON THE SHORTCUT ////
             if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true) // && Dice.diceAllowed == false && currentPlayer == whosturn) 
             {
                 // Debug.Log("POSITION " + player[currentPlayer].GetComponent<FollowThePath>().transform.position);
@@ -624,8 +621,6 @@ public class NewGameControl : MonoBehaviour
                 }
             }
 
-            
-            // this is where currentplayer == whosturn stops 
         }
 
 
@@ -645,43 +640,122 @@ public class NewGameControl : MonoBehaviour
             gameOver = true;
         }
 
+    }
 
+    public void DiceClickMove()
+    {
+        if (whosturn == currentPlayer && Dice.diceAllowed == true)
+        {
+
+            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown <= 3
+                && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == false)
+            {
+                ShortcutMovePlayer();
+
+            }
+            else
+            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown <= 7
+                && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == true)
+            {
+                ShortcutMovePlayer();
+            }
+            else
+            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown <= 11
+                && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == true
+                && player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut == true)
+            {
+                ShortcutMovePlayer();
+            }
+
+            else
+            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown > 3
+                && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == false
+                && player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut == false)
+            {
+                player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex + diceSideThrown + 7;
+
+                if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + NewGameControl.diceSideThrown > 13)
+                {
+                    player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
+                }
+
+                player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint = player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex - diceSideThrown;
+
+                MovePlayer();
+
+                player[currentPlayer].GetComponent<FollowThePath>().onShortcut = false;
+
+                // Debugs
+
+            }
+            else
+            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown > 7
+                && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == true
+                && player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut == false)
+            {
+                player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex + diceSideThrown + 10;
+                player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint = player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex - diceSideThrown;
+
+                MovePlayer();
+
+                player[currentPlayer].GetComponent<FollowThePath>().onShortcut = false;
+
+                // Debugs
+
+            }
+            else
+            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown > 11
+                && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == true
+                && player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut == true)
+            {
+                player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().waypoints.Length - 1;
+                player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint = player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex;
+
+                MovePlayer();
+
+                player[currentPlayer].GetComponent<FollowThePath>().onShortcut = false;
+
+                // Debugs
+
+            }
+            else
+            {
+                MovePlayer();
+            }
+
+            Dice.diceAllowed = false;
+
+        }
 
     }
 
     public void MovePlayer()
     {
         player[currentPlayer].GetComponent<FollowThePath>().moveAllowed = true;
-        
     }
 
     public void ShortcutMovePlayer()
     {
         player[currentPlayer].GetComponent<FollowThePath>().shortcutmoveAllowed = true;
-        
     }
 
     public void NextPlayerMoveTexts()
     {
         playermoveicon[currentPlayer].gameObject.SetActive(false);
 
-
         if (currentPlayer < numofPlayers - 1 && Dice.diceAllowed == false)
         {
             whosturn += 1;
             playermoveicon[whosturn].gameObject.SetActive(true);
-
             Dice.diceAllowed = true;
-            
         }
         else
         {
             whosturn = 0;
             playermoveicon[whosturn].gameObject.SetActive(true);
             Dice.diceAllowed = true;
-            Debug.Log("IN NEXTPLAYERMOVETEXT whosturn " + whosturn);
+            // Debug.Log("IN NEXTPLAYERMOVETEXT whosturn " + whosturn);
         }
-
 
         Dice.diceAllowed = true;
     }
@@ -716,12 +790,9 @@ public class NewGameControl : MonoBehaviour
             player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut = true;
         }
 
-
         TakeShortcutButton.gameObject.SetActive(false);
         DontTakeShortcutButton.gameObject.SetActive(false);
         shotforshortcutTile.gameObject.SetActive(false);
-
-
 
         player[currentPlayer].GetComponent<FollowThePath>().shortcutmoveAllowed = true;
 
@@ -740,7 +811,6 @@ public class NewGameControl : MonoBehaviour
         if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown >= 12)
         {
             player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut = true;
-
         }
 
         if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown >= 19)
@@ -748,15 +818,13 @@ public class NewGameControl : MonoBehaviour
             player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut = true;
         }
 
-
         player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint = player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex - diceSideThrown;
 
         TakeShortcutButton.gameObject.SetActive(false);
         DontTakeShortcutButton.gameObject.SetActive(false);
         shotforshortcutTile.gameObject.SetActive(false);
 
-
-
         player[currentPlayer].GetComponent<FollowThePath>().moveAllowed = true;
     }
+
 }
