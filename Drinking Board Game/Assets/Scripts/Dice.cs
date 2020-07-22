@@ -6,9 +6,7 @@ public class Dice : MonoBehaviour {
 
     private Sprite[] diceSides;
     private SpriteRenderer rend;
-    // [SerializeField]
-    public GameObject[] player;
-
+    
     public NewGameControl newGameControl;
 
     public int diceWhosturn = 0;
@@ -16,16 +14,11 @@ public class Dice : MonoBehaviour {
     public bool coroutineAllowed = true;
     public static bool diceAllowed = true;
 
-    // private static GameObject player1, player2, player3, player4, player5, player6;
-
-    // make a game.control whosturn = int here
-
     // Use this for initialization
     private void Start () {
         rend = GetComponent<SpriteRenderer>();
         diceSides = Resources.LoadAll<Sprite>("DiceSides/");
         rend.sprite = diceSides[3];
-
     }
 
     
@@ -34,26 +27,22 @@ public class Dice : MonoBehaviour {
         if (!NewGameControl.gameOver && coroutineAllowed)
             StartCoroutine("RollTheDice");
 
-        // Changes the current player when clicking on the dice 
-        if (NewGameControl.currentPlayer < NewGameControl.numofPlayers - 1 && NewGameControl.currentPlayer != NewGameControl.whosturn)
+        if (NewGameControl.currentPlayer != NewGameControl.whosturn)
         {
             NewGameControl.currentPlayer += 1;
-
+            NewGameControl.currentPlayer %= NewGameControl.numofPlayers;
         }
-        else
-            NewGameControl.currentPlayer = 0;
-
     }
 
     public IEnumerator RollTheDice()
     {
         coroutineAllowed = false;
         int randomDiceSide = 0;
-        for (int i = 0; i <= 20; i++)
+        for (int i = 0; i <= 20; i++)   // Animate the dice to look like its rolling random numbers
         {
-            randomDiceSide = UnityEngine.Random.Range(0, 3);
+            randomDiceSide = UnityEngine.Random.Range(0, 4);
             rend.sprite = diceSides[randomDiceSide];
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.075f);
         }
 
         NewGameControl.diceSideThrown = randomDiceSide + 1;

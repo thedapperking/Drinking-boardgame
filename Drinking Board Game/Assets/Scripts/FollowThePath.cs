@@ -57,9 +57,6 @@ public class FollowThePath : MonoBehaviour {
             waypoints[StartwaypointIndex].transform.position,
             moveSpeed * Time.deltaTime);
 
-            // Debugs
-            // Debug.Log("player1startwaypoint " + GameControl.player1StartWaypoint);
-
             if (transform.position == waypoints[StartwaypointIndex].transform.position)
             {
                 StartwaypointIndex += 1;
@@ -67,7 +64,6 @@ public class FollowThePath : MonoBehaviour {
 
             Dice.diceAllowed = false;
 
-            // Debug.Log("FTP move repeating ");
         }
     }
 
@@ -79,9 +75,6 @@ public class FollowThePath : MonoBehaviour {
             shortcutwaypoints[shortcutwaypointIndex].transform.position,
             moveSpeed * Time.deltaTime);
 
-            // Debug
-            // Debug.Log("SHORTCUT MOVE SHORTCUTWAYPOINT INDEX " + shortcutwaypoints[shortcutwaypointIndex]);
-            
             if (transform.position == shortcutwaypoints[shortcutwaypointIndex].transform.position)
             {
                 shortcutwaypointIndex += 1;

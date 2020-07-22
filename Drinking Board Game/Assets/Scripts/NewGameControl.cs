@@ -10,12 +10,12 @@ public class NewGameControl : MonoBehaviour
     public GameObject[] playerIcon;
     public GameObject[] playermoveicon;
 
-    private static GameObject whoWinsTextShadow, clicktocontinueText, TakeShortcutButton, DontTakeShortcutButton;
+    public GameObject[] boardTiles;
+    public GameObject[] boardTileBacks;
+    public GameObject[] boardShortcutTiles;
+    public GameObject[] boardShortcutTileBacks;
 
-    public GameObject redFlipacointile, blueMakearuletile, orangeCategoriestile, shotforshortcutTile, pinkGobackonetile, pinkWaterfalltile, pinkTakehalfshottile,
-        redGuysdrinktile, bluePickamatetile, greenNeverhaveievertile, orangeProphunttile, redHoldbreathtile, blueGirlsdrinktile, pinkReturntostarttile, pinkMakearuletile,
-        pinkTakeandgive3tile, greenGuessanumbertile, orangeDrivetile, redDrinkwhatyourolltile, blueCascadetile, greenPriceisrighttile, pinkTakeanothershottile,
-        pinkGobackandgiveashottile, pinkFinishdrinktile, greenEveryonetakeashottile, orangePickanagetile, redPickagametile, blueYouand2tile;
+    private static GameObject whoWinsTextShadow, clicktocontinueText, TakeShortcutButton, DontTakeShortcutButton;
 
     public static int numofPlayers = 1;
     public static int diceSideThrown = 0;
@@ -28,40 +28,19 @@ public class NewGameControl : MonoBehaviour
 
     public void Start()
     {
-        
-        redFlipacointile = GameObject.Find("redFlipacointile");
-        blueMakearuletile = GameObject.Find("blueMakearuletile");
-        orangeCategoriestile = GameObject.Find("orangeCategoriestile");
-        shotforshortcutTile = GameObject.Find("shotforshortcutTile");
-        pinkGobackonetile = GameObject.Find("pinkGobackonetile");
-        pinkWaterfalltile = GameObject.Find("pinkWaterfalltile");
-        pinkTakehalfshottile = GameObject.Find("pinkTakehalfshottile");
-        redGuysdrinktile = GameObject.Find("redGuysdrinktile");
-        bluePickamatetile = GameObject.Find("bluePickamatetile");
-        greenNeverhaveievertile = GameObject.Find("greenNeverhaveievertile");
-        orangeProphunttile = GameObject.Find("orangeProphunttile");
-        redHoldbreathtile = GameObject.Find("redHoldbreathtile");
-        blueGirlsdrinktile = GameObject.Find("blueGirlsdrinktile");
-        pinkReturntostarttile = GameObject.Find("pinkReturntostarttile");
-        pinkMakearuletile = GameObject.Find("pinkMakearuletile");
-        pinkTakeandgive3tile = GameObject.Find("pinkTakeandgive3tile");
-        greenGuessanumbertile = GameObject.Find("greenGuessanumbertile");
-        orangeDrivetile = GameObject.Find("orangeDrivetile");
-        redDrinkwhatyourolltile = GameObject.Find("redDrinkwhatyourolltile");
-        blueCascadetile = GameObject.Find("blueCascadetile");
-        greenPriceisrighttile = GameObject.Find("greenPriceisrighttile");
-        pinkTakeanothershottile = GameObject.Find("pinkTakeanothershottile");
-        pinkGobackandgiveashottile = GameObject.Find("pinkGobackandgiveashottile");
-        pinkFinishdrinktile = GameObject.Find("pinkFinishdrinktile");
-        greenEveryonetakeashottile = GameObject.Find("greenEveryonetakeashottile");
-        orangePickanagetile = GameObject.Find("orangePickanagetile");
-        redPickagametile = GameObject.Find("redPickagametile");
-        blueYouand2tile = GameObject.Find("blueYouand2tile");
+        // Setting normal tiles default state to off 
+        for (int i = 0; i < boardTiles.Length; i++)
+        {
+            boardTiles[i].gameObject.SetActive(false);
+            boardTileBacks[i].SetActive(false);
+        }
 
-        whoWinsTextShadow = GameObject.Find("WhoWinsText");
-        clicktocontinueText = GameObject.Find("ClickBoxToContinue");
-        TakeShortcutButton = GameObject.Find("TakeShortcutButton");
-        DontTakeShortcutButton = GameObject.Find("DontTakeShortcutButton");
+        // Setting shortcut tiles default state to off
+        for (int i = 0; i < boardShortcutTiles.Length; i++)
+        {
+            boardShortcutTiles[i].gameObject.SetActive(false);
+            boardShortcutTileBacks[i].SetActive(false);
+        }
 
         // Finding and setting player models and icons off as default
         for (int i = 0; i < player.Length; i++)
@@ -88,54 +67,23 @@ public class NewGameControl : MonoBehaviour
             playerIcon[i].gameObject.SetActive(true);
             player[i].gameObject.SetActive(true);
             playermoveicon[i].gameObject.SetActive(false);
-
-            //player[i].GetComponent<FollowThePath>().moveAllowed = false;
-            //player[i].GetComponent<FollowThePath>().shortcutmoveAllowed = false;
-            //player[i].GetComponent<FollowThePath>().onShortcut = false;
-            //player[i].GetComponent<FollowThePath>().passed1stShortcut = false;
-            //player[i].GetComponent<FollowThePath>().StartWaypoint = 0;
-            //player[i].GetComponent<FollowThePath>().SCStartWaypoint = 0;
         }
 
         // Start with player 1 move icon on  
         playermoveicon[0].gameObject.SetActive(true);
-        
-        // Initial start of game event tiles showing
-        redFlipacointile.gameObject.SetActive(false);
-        blueMakearuletile.gameObject.SetActive(false);
-        orangeCategoriestile.gameObject.SetActive(false);
-        shotforshortcutTile.gameObject.SetActive(false);
-        pinkGobackonetile.gameObject.SetActive(false);
-        pinkWaterfalltile.gameObject.SetActive(false);
-        pinkTakehalfshottile.gameObject.SetActive(false);
-        redGuysdrinktile.gameObject.SetActive(false);
-        bluePickamatetile.gameObject.SetActive(false);
-        greenNeverhaveievertile.gameObject.SetActive(false);
-        orangeProphunttile.gameObject.SetActive(false);
-        redHoldbreathtile.gameObject.SetActive(false);
-        blueGirlsdrinktile.gameObject.SetActive(false);
-        pinkReturntostarttile.gameObject.SetActive(false);
-        pinkMakearuletile.gameObject.SetActive(false);
-        pinkTakeandgive3tile.gameObject.SetActive(false);
-        greenGuessanumbertile.gameObject.SetActive(false);
-        orangeDrivetile.gameObject.SetActive(false);
-        redDrinkwhatyourolltile.gameObject.SetActive(false);
-        blueCascadetile.gameObject.SetActive(false);
-        greenPriceisrighttile.gameObject.SetActive(false);
-        pinkTakeanothershottile.gameObject.SetActive(false);
-        pinkGobackandgiveashottile.gameObject.SetActive(false);
-        pinkFinishdrinktile.gameObject.SetActive(false);
-        greenEveryonetakeashottile.gameObject.SetActive(false);
-        orangePickanagetile.gameObject.SetActive(false);
-        redPickagametile.gameObject.SetActive(false);
-        blueYouand2tile.gameObject.SetActive(false);
 
+        // Finding Default buttons
+        whoWinsTextShadow = GameObject.Find("WhoWinsText");
+        clicktocontinueText = GameObject.Find("ClickBoxToContinue");
+        TakeShortcutButton = GameObject.Find("TakeShortcutButton");
+        DontTakeShortcutButton = GameObject.Find("DontTakeShortcutButton");
+
+        // Default buttons and text turned off at start
         TakeShortcutButton.gameObject.SetActive(false);
         DontTakeShortcutButton.gameObject.SetActive(false);
         whoWinsTextShadow.gameObject.SetActive(false);
         clicktocontinueText.gameObject.SetActive(false);
 
-        // Debug.Log("start is working");
     }
 
     
@@ -143,10 +91,10 @@ public class NewGameControl : MonoBehaviour
     {
         
         // MOVE PLAYER 
-        if (currentPlayer == whosturn && Dice.diceAllowed == false)
+        if (currentPlayer == whosturn && Dice.diceAllowed == false) // As long as the currentPlayer is whos turn it is and you recently clicked the dice...
         {
            
-            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == false) // && whosturn == currentPlayer) 
+            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == false) // If you arent on the shortcut...
             {
                 if (player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex >
                 player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown)
@@ -154,8 +102,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on red flip a coin tile
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 1)
                     {
-                        redFlipacointile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(0);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 1;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -165,8 +112,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on blue make a rule tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 2)
                     {
-                        blueMakearuletile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(1);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[2].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 2;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -177,8 +123,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on orange categories tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 3)
                     {
-                        orangeCategoriestile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(2);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[3].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 3;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -186,30 +131,27 @@ public class NewGameControl : MonoBehaviour
                     }
 
                     // If you land on yellow shot for shortcut for the first time 
-                    if (player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == false && player[currentPlayer].GetComponent<FollowThePath>().onShortcut == false)
+                    if (player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == false)
                     {
                         if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown >= 4)
                         {
-                            shotforshortcutTile.gameObject.SetActive(true);
+                            // ShowTile(3);
 
                             player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[4].transform.position;
 
                             player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown - 4;
                             player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown + 1;
 
-                            player[currentPlayer].GetComponent<FollowThePath>().onShortcut = true;
                             player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut = true;
 
-                            ChooseRoute();
-
+                            ChooseRoute(3);
                         }
                     }
 
                     // If you land on red guys drink tile 
-                    if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 6 && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true)
+                    if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 6)
                     {
-                        redGuysdrinktile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(4);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[6].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 6;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -220,8 +162,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on blue pick a mate tile
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 7)
                     {
-                        bluePickamatetile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(5);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[7].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 7;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -231,8 +172,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on green never have i ever tile
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 8)
                     {
-                        greenNeverhaveievertile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(6);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[8].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 8;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -243,8 +183,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on orange prop hunt tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 9)
                     {
-                        orangeProphunttile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(7);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[9].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 9;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -255,8 +194,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on red hold breath tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 10)
                     {
-                        redHoldbreathtile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(8);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[10].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 10;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -267,8 +205,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on blue girls drink
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 11)
                     {
-                        blueGirlsdrinktile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(9);
 
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[11].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 11;
@@ -277,30 +214,27 @@ public class NewGameControl : MonoBehaviour
                     }
 
 
-                    // If you land on yellow shot for shortcut for the first time 
+                    // If you land on 2nd yellow shot for shortcut for the first time 
                     if (player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == false)
                     {
                         if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown >= 12)
                         {
-                            shotforshortcutTile.gameObject.SetActive(true);
+                            
                             player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[12].transform.position;
 
                             player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown - 8;
                             player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown + 1;
 
-                            ChooseRoute();
-
                             player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut = true;
+
+                            ChooseRoute(10);
                         }
                     }
-
-
 
                     // If you land on green guess a number tile
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 14)
                     {
-                        greenGuessanumbertile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(11);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[14].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 14;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -311,8 +245,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on orange drive tile
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 15)
                     {
-                        orangeDrivetile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(12);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[15].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 15;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -323,8 +256,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on red drink what you roll tile
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 16)
                     {
-                        redDrinkwhatyourolltile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(13);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[16].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 16;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -335,8 +267,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on blue cascade tile
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 17)
                     {
-                        blueCascadetile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(14);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[17].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 17;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -347,8 +278,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on green price is right tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 18)
                     {
-                        greenPriceisrighttile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(15);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[18].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 18;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -361,18 +291,15 @@ public class NewGameControl : MonoBehaviour
                     {
                         if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown >= 19)
                         {
-                            shotforshortcutTile.gameObject.SetActive(true);
+                            
                             player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[19].transform.position;
-
 
                             player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown - 11;
                             player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown + 1;
 
-                            ChooseRoute();
-
+                            ChooseRoute(16);
 
                             player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut = true;
-
 
                         }
                     }
@@ -381,8 +308,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on green everyone take a shot tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 21)
                     {
-                        greenEveryonetakeashottile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(17);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[21].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 21;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -393,8 +319,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on orange pick an age tile
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 22)
                     {
-                        orangePickanagetile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(18);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[22].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 22;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -405,8 +330,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on red pick a game tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 23)
                     {
-                        redPickagametile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(19);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[23].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 23;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -417,8 +341,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on blue you and 2 tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown == 24)
                     {
-                        blueYouand2tile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(20);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[24].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 24;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
@@ -426,14 +349,12 @@ public class NewGameControl : MonoBehaviour
                     }
 
 
-
-
                     player[currentPlayer].GetComponent<FollowThePath>().moveAllowed = false;
 
 
                     player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint = player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex - 1;
 
-                    if (TakeShortcutButton.activeInHierarchy == false && DontTakeShortcutButton.activeInHierarchy == false)
+                    if (TakeShortcutButton.activeInHierarchy == false && DontTakeShortcutButton.activeInHierarchy == false) // Could use activeSelf here as well
                     {
                         NextPlayerMoveTexts();
                     }
@@ -447,13 +368,11 @@ public class NewGameControl : MonoBehaviour
 
 
             //// IF PLAYER IS ON THE SHORTCUT ////
-            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true) // && Dice.diceAllowed == false && currentPlayer == whosturn) 
+            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut) // If player is on the shortcut...
             {
-                // Debug.Log("POSITION " + player[currentPlayer].GetComponent<FollowThePath>().transform.position);
-                // Debug.Log("P1SC + DICEROLL :" + player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown);
-
+                
                 if (player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex >
-                player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown) // || player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex == 0)
+                player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown) 
                 {
                     // First spot when choosing the shortcut 
                     if (player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown == 0)
@@ -468,8 +387,8 @@ public class NewGameControl : MonoBehaviour
                     // If you land on go back pink go back one
                     if (player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown == 1)
                     {
-                        pinkGobackonetile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(0);
+
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[4].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = 4;
                         
@@ -485,8 +404,7 @@ public class NewGameControl : MonoBehaviour
                     if (player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown == 2)
 
                     {
-                        pinkWaterfalltile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(1);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypoints[2].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex = 2;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex += 1;
@@ -497,8 +415,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on pink take a half shot 
                     if (player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown == 3)
                     {
-                        pinkTakehalfshottile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(2);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypoints[3].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex = 3;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex += 1;
@@ -511,8 +428,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on pink return to start
                     if (player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown == 5)
                     {
-                        pinkReturntostarttile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(3);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().waypoints[0].transform.position;
 
 
@@ -536,8 +452,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on pink make a rule tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown == 6)
                     {
-                        pinkMakearuletile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(4);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypoints[6].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex = 6;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex += 1;
@@ -549,8 +464,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on pink take and give 3 tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown == 7)
                     {
-                        pinkTakeandgive3tile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(5);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypoints[7].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex = 7;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex += 1;
@@ -562,8 +476,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on pink take another shot tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown == 9)
                     {
-                        pinkTakeanothershottile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(6);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypoints[9].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex = 9;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex += 1;
@@ -575,15 +488,11 @@ public class NewGameControl : MonoBehaviour
                     // If you land on pink go back and give a shot tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown == 10)
                     {
-                        pinkGobackandgiveashottile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(7);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypoints[9].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex = 9;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex += 1;
                         ShortcutMovePlayer();
-
-                        // Debugs 
-                        
                     }
 
 
@@ -591,8 +500,7 @@ public class NewGameControl : MonoBehaviour
                     // If you land on pink finish drink tile 
                     if (player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown == 11)
                     {
-                        pinkFinishdrinktile.gameObject.SetActive(true);
-                        clicktocontinueText.gameObject.SetActive(true);
+                        ShowTile(8);
                         player[currentPlayer].GetComponent<FollowThePath>().transform.position = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypoints[11].transform.position;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex = 11;
                         player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex += 1;
@@ -600,12 +508,8 @@ public class NewGameControl : MonoBehaviour
 
                     }
 
-
-
                     player[currentPlayer].GetComponent<FollowThePath>().moveAllowed = false;
                     player[currentPlayer].GetComponent<FollowThePath>().shortcutmoveAllowed = false;
-
-                    
 
                     player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex -= 1;
                     player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex;
@@ -615,9 +519,6 @@ public class NewGameControl : MonoBehaviour
                         NextPlayerMoveTexts();
                     }
 
-
-                    // Debugs
-                    
                 }
             }
 
@@ -644,88 +545,68 @@ public class NewGameControl : MonoBehaviour
 
     public void DiceClickMove()
     {
-        if (whosturn == currentPlayer && Dice.diceAllowed == true)
+        if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut  == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown <= 3
+        && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == false)
         {
+        ShortcutMovePlayer();
 
-            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown <= 3
-                && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == false)
-            {
-                ShortcutMovePlayer();
-
-            }
-            else
-            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown <= 7
+        }else if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown <= 7
                 && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == true)
-            {
-                ShortcutMovePlayer();
-            }
-            else
-            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown <= 11
+              {
+              ShortcutMovePlayer();
+
+              }else if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown <= 11
                 && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == true
                 && player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut == true)
-            {
-                ShortcutMovePlayer();
-            }
+                    {
 
-            else
-            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown > 3
-                && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == false
-                && player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut == false)
-            {
-                player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex + diceSideThrown + 7;
+                    ShortcutMovePlayer();
 
-                if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + NewGameControl.diceSideThrown > 13)
-                {
-                    player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
-                }
+                    }else if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown > 3
+                        && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == false
+                        && player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut == false)
+                           {
+                                player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex + diceSideThrown + 7;
 
-                player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint = player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex - diceSideThrown;
+                                if (player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint + diceSideThrown > 13)
+                                {
+                                    player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex += 1;
+                                }
 
-                MovePlayer();
+                                player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint = player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex - diceSideThrown;
 
-                player[currentPlayer].GetComponent<FollowThePath>().onShortcut = false;
+                                MovePlayer();
 
-                // Debugs
+                                player[currentPlayer].GetComponent<FollowThePath>().onShortcut = false;
 
-            }
-            else
-            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown > 7
-                && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == true
-                && player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut == false)
-            {
-                player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex + diceSideThrown + 10;
-                player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint = player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex - diceSideThrown;
+                          }else if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown > 7
+                                && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == true
+                                && player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut == false)
+                                {
+                                        player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().shortcutwaypointIndex + diceSideThrown + 10;
+                                        player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint = player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex - diceSideThrown;
 
-                MovePlayer();
+                                        MovePlayer();
 
-                player[currentPlayer].GetComponent<FollowThePath>().onShortcut = false;
+                                        player[currentPlayer].GetComponent<FollowThePath>().onShortcut = false;
 
-                // Debugs
+                                }else if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown > 11
+                                        && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == true
+                                        && player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut == true)
+                                      {
+                                                player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().waypoints.Length - 1;
+                                                player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint = player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex;
 
-            }
-            else
-            if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().SCStartWaypoint + diceSideThrown > 11
-                && player[currentPlayer].GetComponent<FollowThePath>().passed1stShortcut == true && player[currentPlayer].GetComponent<FollowThePath>().passed2ndShortcut == true
-                && player[currentPlayer].GetComponent<FollowThePath>().passed3rdShortcut == true)
-            {
-                player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex = player[currentPlayer].GetComponent<FollowThePath>().waypoints.Length - 1;
-                player[currentPlayer].GetComponent<FollowThePath>().StartWaypoint = player[currentPlayer].GetComponent<FollowThePath>().StartwaypointIndex;
+                                                MovePlayer();
 
-                MovePlayer();
+                                                player[currentPlayer].GetComponent<FollowThePath>().onShortcut = false;
 
-                player[currentPlayer].GetComponent<FollowThePath>().onShortcut = false;
-
-                // Debugs
-
-            }
-            else
-            {
-                MovePlayer();
-            }
+                                      }else
+                                      {
+                                         MovePlayer();
+                                      }
 
             Dice.diceAllowed = false;
-
-        }
 
     }
 
@@ -754,18 +635,54 @@ public class NewGameControl : MonoBehaviour
             whosturn = 0;
             playermoveicon[whosturn].gameObject.SetActive(true);
             Dice.diceAllowed = true;
-            // Debug.Log("IN NEXTPLAYERMOVETEXT whosturn " + whosturn);
         }
 
         Dice.diceAllowed = true;
     }
 
-    public void ChooseRoute()
+    // Use this to show what tile player is on
+    public void ShowTile(int tile)
+    {
+        if (player[currentPlayer].GetComponent<FollowThePath>().onShortcut)
+        {
+            boardShortcutTileBacks[tile].SetActive(true);         
+        }else
+            boardTileBacks[tile].SetActive(true);
+
+        clicktocontinueText.gameObject.SetActive(true);
+    }
+
+    // On mouse click will clear board of any boardtiles showing
+    public void OnMouseDown()
+    {
+        for (int i = 0; i < boardShortcutTileBacks.Length; i++)
+        {
+            if (boardShortcutTileBacks[i].activeSelf == true)
+            {
+                boardShortcutTileBacks[i].gameObject.SetActive(false);
+            }
+        }
+
+        for (int i = 0; i < boardTileBacks.Length; i++)
+        {
+            if (boardTileBacks[i].activeSelf == true)
+            {
+                boardTileBacks[i].gameObject.SetActive(false);
+            }
+        }
+
+        clicktocontinueText.gameObject.SetActive(false);
+    }
+
+    // When player is on shortcut tile choosing whether or not to take the shortcut
+    public void ChooseRoute(int tile)
     {
         TakeShortcutButton.gameObject.SetActive(true);
         DontTakeShortcutButton.gameObject.SetActive(true);
+        boardTileBacks[tile].SetActive(true);
     }
 
+    // Shortcut buttons
     public void TakeShortcut()
     {
 
@@ -792,7 +709,11 @@ public class NewGameControl : MonoBehaviour
 
         TakeShortcutButton.gameObject.SetActive(false);
         DontTakeShortcutButton.gameObject.SetActive(false);
-        shotforshortcutTile.gameObject.SetActive(false);
+
+        boardTileBacks[3].SetActive(false);
+        boardTileBacks[10].SetActive(false);
+        boardTileBacks[16].SetActive(false);
+        clicktocontinueText.SetActive(false);
 
         player[currentPlayer].GetComponent<FollowThePath>().shortcutmoveAllowed = true;
 
@@ -822,7 +743,11 @@ public class NewGameControl : MonoBehaviour
 
         TakeShortcutButton.gameObject.SetActive(false);
         DontTakeShortcutButton.gameObject.SetActive(false);
-        shotforshortcutTile.gameObject.SetActive(false);
+        
+        boardTileBacks[3].SetActive(false);
+        boardTileBacks[10].SetActive(false);
+        boardTileBacks[16].SetActive(false);
+        clicktocontinueText.SetActive(false);
 
         player[currentPlayer].GetComponent<FollowThePath>().moveAllowed = true;
     }
