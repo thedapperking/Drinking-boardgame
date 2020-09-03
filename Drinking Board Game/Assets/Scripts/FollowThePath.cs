@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class FollowThePath : MonoBehaviour {
 
@@ -8,23 +9,30 @@ public class FollowThePath : MonoBehaviour {
     [SerializeField]
     private float moveSpeed = 1f;
 
-    [HideInInspector]
+    // [HideInInspector]
     public int StartwaypointIndex = 0;
-    [HideInInspector]
+    // [HideInInspector]
     public int shortcutwaypointIndex = 0;
 
-    [HideInInspector]
+    public int passShortcutNormRoll = 0;
+    public int passShortcutSCRoll = 0;
+
+    // [HideInInspector]
     public int StartWaypoint = 0;
-    [HideInInspector]
+    // [HideInInspector]
     public int SCStartWaypoint = 0;
+
+    public int tileNum = 0;
 
     public bool moveAllowed = false;
     public bool shortcutmoveAllowed = false;
 
+    public bool onShortcutTile = false;
     public bool onShortcut = false;
     public bool passed1stShortcut = false;
     public bool passed2ndShortcut = false;
     public bool passed3rdShortcut = false;
+    public bool LandedOnTile = false;
 
     public GameObject TakeShortcutButton, DontTakeShortcutButton;
 
@@ -33,10 +41,6 @@ public class FollowThePath : MonoBehaviour {
     {
         transform.position = waypoints[StartwaypointIndex].transform.position;
         onShortcut = false;
-
-        // Unused code 
-        // TakeShortcutButton = GameObject.Find("TakeShortcutButton");
-        // DontTakeShortcutButton = GameObject.Find("DontTakeShortcutButton");
 
     }
 	
@@ -47,29 +51,73 @@ public class FollowThePath : MonoBehaviour {
             Move();
         if (shortcutmoveAllowed)
             ShortcutMove();
+
 	}
 
     private void Move()
     {
-        if (StartwaypointIndex <= waypoints.Length - 1)                      // moves until hits finish line 
+        //////////////////////////// Part of Version 3
+        if (StartWaypoint + NewGameControl.diceSideThrown > 4 && passed1stShortcut == false)
         {
-            transform.position = Vector2.MoveTowards(transform.position,
-            waypoints[StartwaypointIndex].transform.position,
-            moveSpeed * Time.deltaTime);
+            tileNum = 4;
+            onShortcutTile = true;
+        }
+        else if (StartWaypoint + NewGameControl.diceSideThrown > 12 && passed2ndShortcut == false)
+        {
+            tileNum = 12;
+            onShortcutTile = true;
+        }
+        else if (StartWaypoint + NewGameControl.diceSideThrown > 19 && passed3rdShortcut == false)
+        {
+            tileNum = 19;
+            onShortcutTile = true;
+        }
+        else
+        {
+            tileNum = 0;
+        }
 
-            if (transform.position == waypoints[StartwaypointIndex].transform.position)
+
+        // Version 3 - the switch/case statement 
+        if (StartwaypointIndex <= waypoints.Length - 1)
+        {
+            switch (tileNum)
             {
-                StartwaypointIndex += 1;
+                case 4:
+                case 12:
+                case 19:
+                    transform.position = Vector2.MoveTowards(transform.position,
+                    waypoints[tileNum].transform.position,
+                    moveSpeed * Time.deltaTime);
+                    if (transform.position == waypoints[tileNum].transform.position)
+                    {
+                        StartwaypointIndex += 1;
+                        // LandedOnTile = true;
+                    }
+                    break;
+
+
+                default:
+                    transform.position = Vector2.MoveTowards(transform.position,
+                        waypoints[StartwaypointIndex].transform.position,
+                        moveSpeed * Time.deltaTime);
+                        if (transform.position == waypoints[StartwaypointIndex].transform.position)
+                        {
+                            StartwaypointIndex += 1;
+                            LandedOnTile = true;
+                        }
+                        break;
+
             }
 
             Dice.diceAllowed = false;
-
         }
+
     }
 
     private void ShortcutMove()
     {
-        if (shortcutwaypointIndex <= waypoints.Length - 1)                      // moves until hits finish line 
+        if (shortcutwaypointIndex <= waypoints.Length - 1 && onShortcutTile == false)                      // moves until hits finish line 
         {
             transform.position = Vector2.MoveTowards(transform.position,
             shortcutwaypoints[shortcutwaypointIndex].transform.position,
@@ -78,6 +126,7 @@ public class FollowThePath : MonoBehaviour {
             if (transform.position == shortcutwaypoints[shortcutwaypointIndex].transform.position)
             {
                 shortcutwaypointIndex += 1;
+                LandedOnTile = true;
             }
 
             Dice.diceAllowed = false;
